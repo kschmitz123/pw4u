@@ -7,13 +7,13 @@ async function run() {
   const masterPassword = await askForMasterPassword();
 
   if (!(await isMasterPasswordCorrect(masterPassword))) {
-    console.error("You are not welcome here! 👿 Try again!");
+    console.error("WRONG 🤯. Enter correct password or leave.");
     return run();
   }
 
   const [passwordName, newPasswordValue] = readCommandLineArguments();
   if (!passwordName) {
-    console.error("Missing password name!");
+    console.error("Unknown password");
     return process.exit(9);
   }
 
