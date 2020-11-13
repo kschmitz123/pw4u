@@ -3,11 +3,12 @@ const { getPassword, setPassword } = require("./lib/passwords");
 const { askForMasterPassword } = require("./lib/questions");
 const { isMasterPasswordCorrect } = require("./lib/validation");
 const { connect, close } = require("./lib/database");
+require("dotenv").config();
 
 async function run() {
   console.log("Connecting to database...");
   await connect(
-    "mongodb+srv://kathrin:dOIOwKLsa8TVNdtx@cluster0.ru8fl.mongodb.net/?retryWrites=true",
+    `mongodb+srv://${process.env.MONGODB_PASSWORD}@cluster0.ru8fl.mongodb.net/pw-manager?retryWrites=true&w=majority`,
     "pw-manager"
   );
   console.log("Connected to database 🎉");
