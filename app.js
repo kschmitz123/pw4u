@@ -7,10 +7,7 @@ require("dotenv").config();
 
 async function run() {
   console.log("Connecting to database...");
-  await connect(
-    `mongodb+srv://${process.env.MONGODB_PASSWORD}@cluster0.ru8fl.mongodb.net/pw-manager?retryWrites=true&w=majority`,
-    "pw-manager"
-  );
+  await connect(process.env.MONGODB_URL, process.env.MONGODB);
   console.log("Connected to database 🎉");
   const masterPassword = await askForMasterPassword();
 
