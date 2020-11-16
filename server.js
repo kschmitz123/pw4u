@@ -33,8 +33,13 @@ app.post("/api/passwords/", async (request, response) => {
 });
 app.delete("/api/passwords/:name", async (request, response) => {
   const { name } = request.params;
-  await deletePassword(name);
-  response.send(`Password for ${name} successfully deleted`);
+  try {
+    await deletePassword(name);
+    response.send(`Password for ${name} successfully deleted`);
+  } catch (error) {
+    console.error(error);
+    response.status(500).send("An internal server error occurred.");
+  }
 });
 
 async function run() {
