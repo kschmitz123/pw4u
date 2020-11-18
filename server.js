@@ -31,6 +31,18 @@ app.post("/api/passwords/", async (request, response) => {
     response.status(500).send("An internal server error occurred.");
   }
 });
+
+app.patch("/api/passwords/", async (request, response) => {
+  const password = request.body;
+  try {
+    await setPassword(password.name, password.value);
+    response.send(`Successfully set ${password.name}`);
+  } catch (error) {
+    console.error(error);
+    response.status(500).send("An internal server error occurred.");
+  }
+});
+
 app.delete("/api/passwords/:name", async (request, response) => {
   const { name } = request.params;
   try {
