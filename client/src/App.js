@@ -1,5 +1,5 @@
 import "./App.css";
-import { getPassword } from "./api/passwords";
+import { deletePassword, getPassword } from "./api/passwords";
 import { useState } from "react";
 
 function App() {
@@ -16,6 +16,12 @@ function App() {
     setPassword(newPassword);
   };
 
+  const handleClick = async () => {
+    await deletePassword(searchPassword);
+    alert("Password deleted");
+    window.location.reload();
+  };
+
   return (
     <div className="App">
       <h1>Password Manager</h1>
@@ -25,6 +31,7 @@ function App() {
         <input type="text" value={searchPassword} onChange={handleChange} />
       </form>
       <h3>{password}</h3>
+      {password && <button onClick={handleClick}>Delete</button>}
     </div>
   );
 }
