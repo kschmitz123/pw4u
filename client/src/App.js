@@ -4,10 +4,12 @@ import Delete from "./components/Delete";
 import Set from "./components/Set";
 import GlobalStyle from "./GlobalStyle";
 import styled from "styled-components/macro";
+import GIF from "./animation_safe.gif";
 
 const Links = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   justify-content: space-between;
   height: 100px;
 
@@ -20,6 +22,17 @@ const Links = styled.div`
   }
 `;
 
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+`;
+
+const Gif = styled.img`
+  border-radius: 25px;
+  margin-top: 20px;
+`;
+
 function App() {
   return (
     <Router>
@@ -27,15 +40,18 @@ function App() {
       <div className="App">
         <Switch>
           <Route exact path="/">
-            <h1>Password Manager</h1>
+            <header>
+              <h1>Password Manager</h1>
+            </header>
             <h3>What do you want to do?</h3>
-            <Links>
-              <Link to="/get">Get passwords</Link>
-
-              <Link to="/delete">Delete passwords</Link>
-
-              <Link to="/set">Set new passwords</Link>
-            </Links>
+            <Container>
+              <Gif src={GIF} alt="safe" />
+              <Links>
+                <Link to="/get">Get password</Link>
+                <Link to="/delete">Delete password</Link>
+                <Link to="/set">Set new password / Update password</Link>
+              </Links>
+            </Container>
           </Route>
           <Route path="/get">
             <Get />
