@@ -1,14 +1,16 @@
 import "./App.css";
-import { deletePassword, getPassword } from "./api/passwords";
+import { deletePassword, getPassword, postPassword } from "./api/passwords";
 import { useState } from "react";
 
 function App() {
   const [password, setPassword] = useState(null);
+  const [newPassword, setNewPassword] = useState("");
+  const [newValue, setNewValue] = useState("");
   const [searchPassword, setSearchPassword] = useState("");
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
 
-  const handleChange = async (event) => {
+  const handleChange = (event) => {
     setSearchPassword(event.target.value);
   };
 
@@ -32,6 +34,17 @@ function App() {
     alert("Password deleted");
     window.location.reload();
   };
+  const handleNewPasswordChange = (event) => {
+    setNewPassword(event.target.value);
+  };
+  const handleNewValueChange = (event) => {
+    setNewValue(event.target.value);
+  };
+
+  const handleNewSubmit = async (event) => {
+    event.preventDefault();
+    await postPassword(newPassword, newValue);
+  };
 
   return (
     <div className="App">
@@ -42,7 +55,23 @@ function App() {
         <input type="text" value={searchPassword} onChange={handleChange} />
       </form>
       <h3>{password}</h3>
-      {password && <button onClick={handleClick}>Delete</button>}
+      <p>Set new password</p>
+      <form onSubmit={handleNewSubmit}>
+        <input
+          type="text"
+          value={newPassword}
+          onChange={handleNewPasswordChange}
+        />
+        <input type="text" value={newValue} onChange={handleNewValueChange} />
+        <button type="submit">Click</button>
+      </form>
+
+      {password && (
+        <div>
+          <button onClick={handleClick}>Delete</button>
+          <button onClick={() => window.location.reload()}>Back</button>
+        </div>
+      )}
       {loading && <div>Loading...</div>}
       {error && <div>{error.message}</div>}
     </div>
