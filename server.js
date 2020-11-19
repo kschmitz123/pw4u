@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const path = require("path");
 const { getPassword, setPassword, deletePassword } = require("./lib/passwords");
 const { connect } = require("./lib/database");
 
@@ -52,6 +53,17 @@ app.delete("/api/passwords/:name", async (request, response) => {
     console.error(error);
     response.status(500).send("An internal server error occurred.");
   }
+});
+
+app.use(express.static(path.join(__dirname, "client/build")));
+
+app.use(
+  "/storybook",
+  express.static(path.join(__dirname, "client/storybook-static"))
+);
+
+app.get("*", (request, response) => {
+  response.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
 async function run() {
